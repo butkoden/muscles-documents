@@ -39,3 +39,27 @@ modules:
 ## Scope
 
 MVP is read-only: no writes to external systems are performed.
+
+## Examples
+
+### Local source smoke
+
+Run a full `documents.*` action flow on temporary files:
+
+```bash
+PYTHONPATH=src python examples/run_documents_pipeline.py
+```
+
+### Sync plan and request
+
+Build and inspect a sync plan for configured sources:
+
+```bash
+PYTHONPATH=src python examples/run_documents_sync.py
+```
+
+Both examples:
+
+- initialize package via `init_package(app, config)`;
+- use `ActionDispatcher` for actions;
+- demonstrate `load`, `parse`, `chunk`, `sync.plan`, and `sync.request` flows.
