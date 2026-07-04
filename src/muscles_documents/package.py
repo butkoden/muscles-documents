@@ -86,11 +86,7 @@ def _dependency_container():
         from muscles.core import DependencyContainer  # type: ignore[import-not-found]
         return DependencyContainer()
     except Exception:  # pragma: no cover
-        try:
-            from muscles.core import DependencyContainer  # type: ignore[import-not-found]
-            return DependencyContainer()
-        except Exception:
-            return _LegacyContainer()
+        return _LegacyContainer()
 
 
 class _LegacyContainer:
