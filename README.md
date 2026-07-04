@@ -8,11 +8,28 @@ Framework-level document ingestion and chunking package for the Muscles ecosyste
 - Provide an initial pipeline for local files + markdown/text content ingestion.
 - Expose `Muscles` actions to drive ingestion/diagnostics through any transport.
 
+## Ecosystem Position
+
+`muscles-documents` is a framework extension for document flows. It owns source
+loading, parsing, chunking, metadata and sync planning; it does not own AI model
+calls or protocol routing.
+
+Related repositories:
+
+- [`muscles`](https://github.com/butkoden/muscles) - core action contracts, dispatcher, inspect contract and canonical documentation.
+- [`muscles-ai`](https://github.com/butkoden/muscles-ai) - AI/RAG actions that can consume document contracts.
+- [`muscles-sql`](https://github.com/butkoden/muscles-sql) - SQL persistence for projects that store document metadata or ingestion state.
+- [`muscles-mcp`](https://github.com/butkoden/muscles-mcp) - MCP projection for document actions when exposed to AI tools.
+- [`muscles-benchmarks`](https://github.com/butkoden/muscles-benchmarks) - regression coverage for document extension contracts.
+
 ## Installation
 
 ```bash
-pip install muscles-documents
+pip install git+https://github.com/butkoden/muscles-documents.git
 ```
+
+The canonical ecosystem install matrix lives in
+[`muscles/docs/installation.md`](https://github.com/butkoden/muscles/blob/master/docs/installation.md).
 
 Configured as a standard module package:
 
@@ -39,6 +56,9 @@ modules:
 ## Scope
 
 MVP is read-only: no writes to external systems are performed.
+Google Drive, HTML and richer storage adapters are extension points for later
+package iterations; the current package keeps parser/source contracts stable
+for those additions.
 
 ## Examples
 
