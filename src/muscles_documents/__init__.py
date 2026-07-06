@@ -6,16 +6,35 @@ if TYPE_CHECKING:
     from .config import DocumentsConfig, SourceConfig
     from .package import DocumentsPackage
     from .runtime import DocumentPipeline, DocumentSource
-    from .schemas import DocumentChunk, DocumentMetadata, DocumentSyncPlan, ParsedDocument
+    from .schemas import (
+        DocumentBlob,
+        DocumentBlock,
+        DocumentChunk,
+        DocumentError,
+        DocumentMetadata,
+        DocumentRef,
+        DocumentSection,
+        DocumentSyncOperation,
+        DocumentSyncPlan,
+        DocumentSyncResult,
+        ParsedDocument,
+    )
 
 
 __all__ = [
     "DocumentsPackage",
     "DocumentPipeline",
     "DocumentSource",
+    "DocumentBlob",
+    "DocumentBlock",
     "DocumentChunk",
+    "DocumentError",
     "DocumentMetadata",
+    "DocumentRef",
+    "DocumentSection",
+    "DocumentSyncOperation",
     "DocumentSyncPlan",
+    "DocumentSyncResult",
     "ParsedDocument",
     "SourceConfig",
     "DocumentsConfig",
@@ -36,18 +55,46 @@ def __getattr__(name: str):
         from .runtime import DocumentSource
 
         return DocumentSource
+    if name == "DocumentBlob":
+        from .schemas import DocumentBlob
+
+        return DocumentBlob
+    if name == "DocumentBlock":
+        from .schemas import DocumentBlock
+
+        return DocumentBlock
     if name == "DocumentChunk":
         from .schemas import DocumentChunk
 
         return DocumentChunk
+    if name == "DocumentError":
+        from .schemas import DocumentError
+
+        return DocumentError
     if name == "DocumentMetadata":
         from .schemas import DocumentMetadata
 
         return DocumentMetadata
+    if name == "DocumentRef":
+        from .schemas import DocumentRef
+
+        return DocumentRef
+    if name == "DocumentSection":
+        from .schemas import DocumentSection
+
+        return DocumentSection
+    if name == "DocumentSyncOperation":
+        from .schemas import DocumentSyncOperation
+
+        return DocumentSyncOperation
     if name == "DocumentSyncPlan":
         from .schemas import DocumentSyncPlan
 
         return DocumentSyncPlan
+    if name == "DocumentSyncResult":
+        from .schemas import DocumentSyncResult
+
+        return DocumentSyncResult
     if name == "ParsedDocument":
         from .schemas import ParsedDocument
 

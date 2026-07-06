@@ -30,7 +30,13 @@ class MemoryTelemetry:
 def main() -> None:
     with TemporaryDirectory() as temp_dir:
         root = Path(temp_dir)
-        (root / "guide.md").write_text("<h1>Muscles documents</h1>\n\nSimple paragraph for parsing.", encoding="utf-8")
+        (root / "guide.md").write_text(
+            "# Muscles documents\n\n"
+            "Simple paragraph for parsing.\n\n"
+            "## Flow\n"
+            "Load, parse, normalize and chunk without owning project storage.",
+            encoding="utf-8",
+        )
         (root / "notes.txt").write_text("Line 1\nLine 2\n", encoding="utf-8")
 
         telemetry = MemoryTelemetry()
@@ -60,6 +66,12 @@ def main() -> None:
         inspect_source = dispatcher.execute("documents.source.inspect", {"source": "repo"})
         print("source.inspect ->", inspect_source.value)
 
+        inspect_runtime = dispatcher.execute("documents.inspect", {})
+        print("inspect ->", inspect_runtime.value)
+
+        doctor = dispatcher.execute("documents.doctor", {})
+        print("doctor ->", doctor.value)
+
         loaded = dispatcher.execute("documents.load", {"source": "repo"})
         print("loaded ->", loaded.value["count"], "documents")
 
@@ -70,17 +82,29 @@ def main() -> None:
                 "source": first["source"],
                 "reference": first["reference"],
                 "text": first["text"],
-                "parser": "html",
+                "parser": "auto",
             },
         )
-        print("parsed text length ->", len(parsed.value["text"]))
+        print("sections ->", [section["section_path"] for section in parsed.value["sections"]])
+
+        normalized = dispatcher.execute(
+            "documents.normalize",
+            {
+                "source": parsed.value["source"],
+                "reference": parsed.value["reference"],
+                "text": parsed.value["text"],
+                "parser": "markdown",
+            },
+        )
+        print("normalized text length ->", len(normalized.value["text"]))
 
         chunks = dispatcher.execute(
             "documents.chunk",
             {
-                "source": first["source"],
-                "reference": first["reference"],
-                "text": first["text"],
+                "source": normalized.value["source"],
+                "reference": normalized.value["reference"],
+                "text": normalized.value["text"],
+                "strategy": "heading",
             },
         )
         print("chunks ->", len(chunks.value["chunks"]))
