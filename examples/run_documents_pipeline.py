@@ -6,13 +6,25 @@ Run:
   PYTHONPATH=src python examples/run_documents_pipeline.py
 """
 
+from contextlib import contextmanager
 from tempfile import TemporaryDirectory
 
 from types import SimpleNamespace
 from pathlib import Path
+from typing import Any, Iterator
 
-from muscles import ActionDispatcher
+from muscles import ActionDispatcher, DependencyContainer, TelemetryProvider
 from muscles_documents import init_package
+
+
+class MemoryTelemetry:
+    def __init__(self) -> None:
+        self.records: list[tuple[str, dict[str, Any]]] = []
+
+    @contextmanager
+    def span(self, name: str, **attributes: Any) -> Iterator[None]:
+        self.records.append((name, dict(attributes)))
+        yield
 
 
 def main() -> None:
@@ -21,7 +33,10 @@ def main() -> None:
         (root / "guide.md").write_text("<h1>Muscles documents</h1>\n\nSimple paragraph for parsing.", encoding="utf-8")
         (root / "notes.txt").write_text("Line 1\nLine 2\n", encoding="utf-8")
 
-        app = SimpleNamespace()
+        telemetry = MemoryTelemetry()
+        app = SimpleNamespace(container=DependencyContainer())
+        app.container.register(TelemetryProvider, lambda: telemetry)
+
         init_package(
             app,
             {
@@ -69,8 +84,8 @@ def main() -> None:
             },
         )
         print("chunks ->", len(chunks.value["chunks"]))
+        print("telemetry spans:", [name for name, _ in telemetry.records])
 
 
 if __name__ == "__main__":
     main()
-

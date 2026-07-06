@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any
+from contextlib import contextmanager
+from typing import Any, Iterator
 
 try:
     from muscles import ActionContext
@@ -154,7 +155,8 @@ def _pipeline(context: ActionContext):
 def _list_sources(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
     del payload
     pipeline = _pipeline(context)
-    return {"sources": pipeline.list_sources()}
+    with _telemetry(context).span("muscles.documents.source.list"):
+        return {"sources": pipeline.list_sources()}
 
 
 def _source_inspect(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
@@ -164,7 +166,8 @@ def _source_inspect(payload: dict[str, Any], context: ActionContext) -> dict[str
 
 def _load(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
     pipeline = _pipeline(context)
-    documents = pipeline.load(source=payload["source"], reference=payload.get("reference"))
+    with _telemetry(context).span("muscles.documents.load", **_document_attributes(pipeline, payload)):
+        documents = pipeline.load(source=payload["source"], reference=payload.get("reference"))
     return {
         "count": len(documents),
         "documents": [
@@ -179,15 +182,17 @@ def _parse(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
 
     pipeline = _pipeline(context)
     parser = payload.get("parser", "text")
-    parsed = pipeline.parse(
-        ParsedDocument(
-            source=payload["source"],
-            reference=payload["reference"],
-            text=payload["text"],
-            metadata=DocumentMetadata(source=payload["source"], mime="text/plain"),
-        ),
-        parser=parser,
+    telemetry = _telemetry(context)
+    document = ParsedDocument(
+        source=payload["source"],
+        reference=payload["reference"],
+        text=payload["text"],
+        metadata=DocumentMetadata(source=payload["source"], mime="text/plain"),
     )
+    with telemetry.span("muscles.documents.parse", **_document_attributes(pipeline, payload, parser=parser)):
+        parsed = pipeline.parse(document, parser=parser)
+    with telemetry.span("muscles.documents.normalize", **_document_attributes(pipeline, payload, parser=parser)):
+        pass
     return {"source": parsed.source, "reference": parsed.reference, "text": parsed.text}
 
 
@@ -201,7 +206,12 @@ def _chunk(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
         text=payload["text"],
         metadata=DocumentMetadata(source=payload["source"], mime="text/plain"),
     )
-    chunks = pipeline.chunk(parsed)
+    with _telemetry(context).span(
+        "muscles.documents.chunk",
+        **_document_attributes(pipeline, payload),
+        **{"documents.chunker": "fixed"},
+    ):
+        chunks = pipeline.chunk(parsed)
     return {
         "source": payload["source"],
         "reference": payload["reference"],
@@ -211,10 +221,42 @@ def _chunk(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
 
 def _sync_plan(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
     pipeline = _pipeline(context)
-    plans = pipeline.sync_plan(source=payload.get("source"))
+    with _telemetry(context).span("muscles.documents.sync.plan", **_document_attributes(pipeline, payload)):
+        plans = pipeline.sync_plan(source=payload.get("source"))
     return {"plans": [{"source": item.source, "operations": item.operations} for item in plans]}
 
 
 def _sync_request(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
     pipeline = _pipeline(context)
-    return pipeline.sync_request(source=payload.get("source"))
+    with _telemetry(context).span("muscles.documents.sync.execute", **_document_attributes(pipeline, payload)):
+        return pipeline.sync_request(source=payload.get("source"))
+
+
+def _telemetry(context: ActionContext):
+    try:
+        from muscles import resolve_telemetry  # type: ignore[import-not-found]
+
+        return resolve_telemetry(context.application)
+    except Exception:
+        return _NoopTelemetry()
+
+
+def _document_attributes(pipeline, payload: dict[str, Any], *, parser: str | None = None) -> dict[str, Any]:
+    source_name = payload.get("source")
+    source = getattr(pipeline, "sources", {}).get(source_name)
+    attributes: dict[str, Any] = {}
+    if source_name is not None:
+        attributes["documents.source"] = source_name
+    if source is not None:
+        attributes["documents.source.type"] = source.type
+    if parser is not None:
+        attributes["documents.parser"] = parser
+    attributes["documents.mime"] = "text/plain"
+    return attributes
+
+
+class _NoopTelemetry:
+    @contextmanager
+    def span(self, name: str, **attributes: Any) -> Iterator[None]:
+        del name, attributes
+        yield

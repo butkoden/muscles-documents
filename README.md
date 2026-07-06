@@ -60,6 +60,25 @@ Google Drive, HTML and richer storage adapters are extension points for later
 package iterations; the current package keeps parser/source contracts stable
 for those additions.
 
+## Telemetry
+
+`muscles-documents` resolves telemetry through the neutral Muscles
+`TelemetryProvider`; it does not import `muscles-otel` directly.
+
+When a project registers a provider, document actions emit safe spans:
+
+- `muscles.documents.source.list`
+- `muscles.documents.load`
+- `muscles.documents.parse`
+- `muscles.documents.normalize`
+- `muscles.documents.chunk`
+- `muscles.documents.sync.plan`
+- `muscles.documents.sync.execute`
+
+Allowed attributes include source name/type, MIME, parser and chunker metadata.
+Raw document text, HTML body, extracted text, file content, source credentials
+and tokens must not be stored in span attributes.
+
 ## Examples
 
 ### Local source smoke
@@ -82,4 +101,5 @@ Both examples:
 
 - initialize package via `init_package(app, config)`;
 - use `ActionDispatcher` for actions;
-- demonstrate `load`, `parse`, `chunk`, `sync.plan`, and `sync.request` flows.
+- demonstrate `load`, `parse`, `chunk`, `sync.plan`, and `sync.request` flows;
+- show neutral telemetry provider usage without requiring `muscles-otel`.
