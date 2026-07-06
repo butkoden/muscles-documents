@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
+from dataclasses import asdict, is_dataclass
 from typing import Any, Iterator
 
 try:
@@ -18,6 +19,7 @@ def _register_action(app, **kwargs):
     if register_action is not None:
         return register_action(app, **kwargs)
     from muscles.core.core import ActionContract, get_application_registry
+
     return get_application_registry(app).add_action(
         ActionContract(
             name=kwargs["name"],
@@ -50,6 +52,7 @@ LOAD_SCHEMA = {
         "source": {"type": "string"},
         "reference": {"type": "string"},
         "parser": {"type": "string"},
+        "limit": {"type": "integer", "minimum": 1},
     },
     "required": ["source"],
     "additionalProperties": False,
@@ -63,6 +66,23 @@ PARSE_SCHEMA = {
         "source": {"type": "string"},
         "reference": {"type": "string"},
         "parser": {"type": "string"},
+        "mime": {"type": "string"},
+        "metadata": {"type": "object"},
+    },
+    "required": ["text", "source", "reference"],
+    "additionalProperties": False,
+}
+
+
+NORMALIZE_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "text": {"type": "string"},
+        "source": {"type": "string"},
+        "reference": {"type": "string"},
+        "parser": {"type": "string"},
+        "mime": {"type": "string"},
+        "metadata": {"type": "object"},
     },
     "required": ["text", "source", "reference"],
     "additionalProperties": False,
@@ -75,68 +95,103 @@ CHUNK_SCHEMA = {
         "source": {"type": "string"},
         "reference": {"type": "string"},
         "text": {"type": "string"},
+        "parser": {"type": "string"},
+        "mime": {"type": "string"},
+        "strategy": {"type": "string", "enum": ["fixed", "heading"]},
+        "metadata": {"type": "object"},
     },
     "required": ["source", "reference", "text"],
     "additionalProperties": False,
 }
 
 
+EMPTY_SCHEMA = {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": False,
+}
+
+
 def register_document_actions(app, *, transports: list[str]):
-        _register_action(
-            app,
-            name="documents.sources.list",
-            description="List declared sources.",
-            input_schema=LIST_SCHEMA,
-            handler=_list_sources,
-            transports=transports,
-        )
-        _register_action(
-            app,
-            name="documents.source.inspect",
-            description="Inspect one source or all declared sources.",
-            input_schema=LIST_SCHEMA,
-            handler=_source_inspect,
-            transports=transports,
-        )
-        _register_action(
-            app,
-            name="documents.load",
-            description="Load raw text documents for a source.",
-            input_schema=LOAD_SCHEMA,
-            handler=_load,
-            transports=transports,
-        )
-        _register_action(
-            app,
-            name="documents.parse",
-            description="Parse text into normalized document.",
-            input_schema=PARSE_SCHEMA,
-            handler=_parse,
-            transports=transports,
-        )
-        _register_action(
-            app,
-            name="documents.chunk",
-            description="Split text into chunks.",
-            input_schema=CHUNK_SCHEMA,
-            handler=_chunk,
-            transports=transports,
-        )
-        _register_action(
-            app,
-            name="documents.sync.plan",
-            description="Build ingestion plan for source(s).",
-            input_schema=LIST_SCHEMA,
-            handler=_sync_plan,
-            transports=transports,
-        )
-        _register_action(
-            app,
-            name="documents.sync.request",
-            description="Execute ingestion sync plan for source(s).",
-            input_schema=LIST_SCHEMA,
+    _register_action(
+        app,
+        name="documents.sources.list",
+        description="List declared sources.",
+        input_schema=LIST_SCHEMA,
+        handler=_list_sources,
+        transports=transports,
+    )
+    _register_action(
+        app,
+        name="documents.source.inspect",
+        description="Inspect one source or all declared sources.",
+        input_schema=LIST_SCHEMA,
+        handler=_source_inspect,
+        transports=transports,
+    )
+    _register_action(
+        app,
+        name="documents.load",
+        description="Load raw document blobs for a source.",
+        input_schema=LOAD_SCHEMA,
+        handler=_load,
+        transports=transports,
+    )
+    _register_action(
+        app,
+        name="documents.parse",
+        description="Parse text into a structured document.",
+        input_schema=PARSE_SCHEMA,
+        handler=_parse,
+        transports=transports,
+    )
+    _register_action(
+        app,
+        name="documents.normalize",
+        description="Normalize parsed or raw document text.",
+        input_schema=NORMALIZE_SCHEMA,
+        handler=_normalize,
+        transports=transports,
+    )
+    _register_action(
+        app,
+        name="documents.chunk",
+        description="Split structured text into chunks.",
+        input_schema=CHUNK_SCHEMA,
+        handler=_chunk,
+        transports=transports,
+    )
+    _register_action(
+        app,
+        name="documents.sync.plan",
+        description="Build ingestion plan for source(s).",
+        input_schema=LIST_SCHEMA,
+        handler=_sync_plan,
+        transports=transports,
+    )
+    _register_action(
+        app,
+        name="documents.sync.request",
+        description="Request execution of an ingestion sync plan.",
+        input_schema=LIST_SCHEMA,
         handler=_sync_request,
-        transports=["cli", "http", "mcp"],
+        transports=transports,
+    )
+    _register_action(
+        app,
+        name="documents.inspect",
+        description="Inspect document ingestion runtime capabilities.",
+        input_schema=EMPTY_SCHEMA,
+        handler=_inspect,
+        transports=transports,
+    )
+    _register_action(
+        app,
+        name="documents.doctor",
+        description="Run safe document ingestion diagnostics.",
+        input_schema=EMPTY_SCHEMA,
+        handler=_doctor,
+        transports=transports,
     )
 
 
@@ -161,61 +216,91 @@ def _list_sources(payload: dict[str, Any], context: ActionContext) -> dict[str, 
 
 def _source_inspect(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
     pipeline = _pipeline(context)
-    return pipeline.inspect_source(source_name=payload.get("source"))
+    with _telemetry(context).span("muscles.documents.source.inspect", **_document_attributes(pipeline, payload)):
+        return pipeline.inspect_source(source_name=payload.get("source"))
 
 
 def _load(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
     pipeline = _pipeline(context)
     with _telemetry(context).span("muscles.documents.load", **_document_attributes(pipeline, payload)):
-        documents = pipeline.load(source=payload["source"], reference=payload.get("reference"))
+        blobs = pipeline.load_blobs(
+            source=payload["source"],
+            reference=payload.get("reference"),
+            limit=payload.get("limit"),
+        )
     return {
-        "count": len(documents),
+        "count": len(blobs),
         "documents": [
-            {"source": item.source, "reference": item.reference, "text": item.text[:250], "metadata": item.metadata.__dict__}
-            for item in documents
+            {
+                "source": blob.source,
+                "reference": blob.reference,
+                "mime": blob.mime,
+                "text": blob.text,
+                "checksum": blob.checksum,
+                "metadata": _safe_metadata(blob.metadata),
+            }
+            for blob in blobs
         ],
     }
 
 
 def _parse(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
-    from .schemas import ParsedDocument, DocumentMetadata
-
     pipeline = _pipeline(context)
-    parser = payload.get("parser", "text")
+    parser = payload.get("parser", "auto")
     telemetry = _telemetry(context)
-    document = ParsedDocument(
-        source=payload["source"],
-        reference=payload["reference"],
-        text=payload["text"],
-        metadata=DocumentMetadata(source=payload["source"], mime="text/plain"),
-    )
     with telemetry.span("muscles.documents.parse", **_document_attributes(pipeline, payload, parser=parser)):
-        parsed = pipeline.parse(document, parser=parser)
+        parsed = pipeline.parse_text(
+            source=payload["source"],
+            reference=payload["reference"],
+            text=payload["text"],
+            parser=parser,
+            mime=payload.get("mime"),
+            metadata=_safe_metadata(payload.get("metadata")),
+        )
     with telemetry.span("muscles.documents.normalize", **_document_attributes(pipeline, payload, parser=parser)):
         pass
-    return {"source": parsed.source, "reference": parsed.reference, "text": parsed.text}
+    return _serialize(parsed)
+
+
+def _normalize(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
+    pipeline = _pipeline(context)
+    parser = payload.get("parser", "auto")
+    with _telemetry(context).span("muscles.documents.normalize", **_document_attributes(pipeline, payload, parser=parser)):
+        parsed = pipeline.parse_text(
+            source=payload["source"],
+            reference=payload["reference"],
+            text=payload["text"],
+            parser=parser,
+            mime=payload.get("mime"),
+            metadata=_safe_metadata(payload.get("metadata")),
+        )
+        normalized = pipeline.normalize(parsed)
+    return _serialize(normalized)
 
 
 def _chunk(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
-    from .schemas import ParsedDocument, DocumentMetadata
-
     pipeline = _pipeline(context)
-    parsed = ParsedDocument(
-        source=payload["source"],
-        reference=payload["reference"],
-        text=payload["text"],
-        metadata=DocumentMetadata(source=payload["source"], mime="text/plain"),
-    )
+    parser = payload.get("parser", "auto")
+    strategy = payload.get("strategy", "fixed")
     with _telemetry(context).span(
         "muscles.documents.chunk",
-        **_document_attributes(pipeline, payload),
-        **{"documents.chunker": "fixed"},
+        **_document_attributes(pipeline, payload, parser=parser),
+        **{"documents.chunker": strategy},
     ):
-        chunks = pipeline.chunk(parsed)
+        parsed = pipeline.parse_text(
+            source=payload["source"],
+            reference=payload["reference"],
+            text=payload["text"],
+            parser=parser,
+            mime=payload.get("mime"),
+            metadata=_safe_metadata(payload.get("metadata")),
+        )
+        normalized = pipeline.normalize(parsed)
+        chunks = pipeline.chunk(normalized, strategy=strategy)
     return {
         "source": payload["source"],
         "reference": payload["reference"],
-        "chunks": [chunk.__dict__ for chunk in chunks],
+        "chunks": [_serialize(chunk) for chunk in chunks],
     }
 
 
@@ -223,13 +308,27 @@ def _sync_plan(payload: dict[str, Any], context: ActionContext) -> dict[str, Any
     pipeline = _pipeline(context)
     with _telemetry(context).span("muscles.documents.sync.plan", **_document_attributes(pipeline, payload)):
         plans = pipeline.sync_plan(source=payload.get("source"))
-    return {"plans": [{"source": item.source, "operations": item.operations} for item in plans]}
+    return {"plans": [_serialize(plan) for plan in plans]}
 
 
 def _sync_request(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
     pipeline = _pipeline(context)
     with _telemetry(context).span("muscles.documents.sync.execute", **_document_attributes(pipeline, payload)):
-        return pipeline.sync_request(source=payload.get("source"))
+        return _serialize(pipeline.sync_request(source=payload.get("source")))
+
+
+def _inspect(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
+    del payload
+    pipeline = _pipeline(context)
+    with _telemetry(context).span("muscles.documents.inspect"):
+        return pipeline.inspect()
+
+
+def _doctor(payload: dict[str, Any], context: ActionContext) -> dict[str, Any]:
+    del payload
+    pipeline = _pipeline(context)
+    with _telemetry(context).span("muscles.documents.doctor"):
+        return pipeline.doctor()
 
 
 def _telemetry(context: ActionContext):
@@ -251,8 +350,31 @@ def _document_attributes(pipeline, payload: dict[str, Any], *, parser: str | Non
         attributes["documents.source.type"] = source.type
     if parser is not None:
         attributes["documents.parser"] = parser
-    attributes["documents.mime"] = "text/plain"
+    attributes["documents.mime"] = payload.get("mime", "text/plain")
     return attributes
+
+
+def _safe_metadata(value: Any) -> dict[str, Any]:
+    if not isinstance(value, dict):
+        return {}
+    blocked = ("secret", "token", "password", "key", "credential")
+    return {
+        str(key): item
+        for key, item in value.items()
+        if not any(marker in str(key).lower() for marker in blocked)
+    }
+
+
+def _serialize(value: Any):
+    if is_dataclass(value):
+        return asdict(value)
+    if isinstance(value, list):
+        return [_serialize(item) for item in value]
+    if isinstance(value, tuple):
+        return [_serialize(item) for item in value]
+    if isinstance(value, dict):
+        return {key: _serialize(item) for key, item in value.items()}
+    return value
 
 
 class _NoopTelemetry:

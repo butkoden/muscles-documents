@@ -33,15 +33,17 @@ class DocumentsPackage:
         del app, config
 
         def doctor_documents() -> dict[str, Any]:
-            return {
-                "status": "ok",
-                "checks": [
-                    {
-                        "name": "documents.runtime.exists",
-                        "status": "ok" if runtime is not None else "failed",
-                    }
-                ],
-            }
+            if runtime is None:
+                return {
+                    "status": "failed",
+                    "checks": [
+                        {
+                            "name": "documents.runtime.exists",
+                            "status": "failed",
+                        }
+                    ],
+                }
+            return runtime.doctor()
 
         return doctor_documents
 

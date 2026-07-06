@@ -49,16 +49,70 @@ modules:
 - `documents.source.inspect`
 - `documents.load`
 - `documents.parse`
+- `documents.normalize`
 - `documents.chunk`
 - `documents.sync.plan`
 - `documents.sync.request`
+- `documents.inspect`
+- `documents.doctor`
+
+## Ingestion Toolkit
+
+The package exposes portable contracts for the document preparation flow:
+
+```text
+source -> DocumentRef -> DocumentBlob -> ParsedDocument
+       -> DocumentSection / DocumentBlock -> DocumentChunk
+       -> DocumentSyncPlan / DocumentSyncResult
+```
+
+MVP components:
+
+- local source adapter with stable relative references;
+- raw blob loading with checksums;
+- text, markdown and HTML parsers;
+- safe text normalizer that preserves markdown code fences;
+- fixed-size and heading-aware chunkers;
+- dry-run sync planner;
+- sync request result contract for project executors/jobs;
+- safe `inspect` and `doctor` diagnostics.
+
+Projects own persistence and integration policy. They may store refs, blobs,
+parsed documents, chunks and sync state in PostgreSQL, Elasticsearch, MongoDB,
+Redis, Qdrant or another system, but `muscles-documents` does not import those
+clients and does not write to external stores directly.
+
+`muscles-ai` can consume `DocumentChunk` objects after a project stores and
+exposes them through its own data/search ports. This package does not call
+LLMs, create embeddings, rank search results or own prompt/RAG behavior.
+
+### Python API
+
+```python
+from muscles_documents.config import SourceConfig
+from muscles_documents.runtime import DocumentPipeline
+
+pipeline = DocumentPipeline(
+    key="documents",
+    sources={
+        "docs": SourceConfig(name="docs", type="local", path="./docs"),
+    },
+)
+
+refs = pipeline.list_refs("docs")
+blob = pipeline.load_blob("docs", refs[0].reference)
+parsed = pipeline.parse_blob(blob)
+normalized = pipeline.normalize(parsed)
+chunks = pipeline.chunk(normalized, strategy="heading")
+plan = pipeline.sync_plan("docs")
+```
 
 ## Scope
 
 MVP is read-only: no writes to external systems are performed.
-Google Drive, HTML and richer storage adapters are extension points for later
-package iterations; the current package keeps parser/source contracts stable
-for those additions.
+Google Drive, PDF/DOCX, URL/HTTP and richer storage adapters are extension
+points for later package iterations; the current package keeps parser/source
+contracts stable for those additions.
 
 ## Telemetry
 
@@ -74,6 +128,8 @@ When a project registers a provider, document actions emit safe spans:
 - `muscles.documents.chunk`
 - `muscles.documents.sync.plan`
 - `muscles.documents.sync.execute`
+- `muscles.documents.inspect`
+- `muscles.documents.doctor`
 
 Allowed attributes include source name/type, MIME, parser and chunker metadata.
 Raw document text, HTML body, extracted text, file content, source credentials
@@ -101,5 +157,6 @@ Both examples:
 
 - initialize package via `init_package(app, config)`;
 - use `ActionDispatcher` for actions;
-- demonstrate `load`, `parse`, `chunk`, `sync.plan`, and `sync.request` flows;
+- demonstrate `load`, `parse`, `normalize`, `chunk`, `sync.plan`, `sync.request`,
+  `inspect`, and `doctor` flows;
 - show neutral telemetry provider usage without requiring `muscles-otel`.
