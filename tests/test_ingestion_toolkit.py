@@ -187,6 +187,7 @@ def test_sync_plan_is_deterministic_and_read_only(tmp_path: Path):
     assert result.status == "planned"
     assert result.operations_total == 2
     assert result.operations_completed == 0
+    assert [operation["reference"] for operation in result.operations] == ["a.txt", "b.txt"]
 
 
 def test_actions_expose_ingestion_toolkit_without_leaking_secrets(tmp_path: Path):
@@ -255,6 +256,7 @@ def test_actions_expose_ingestion_toolkit_without_leaking_secrets(tmp_path: Path
     ).value
     inspect = dispatcher.execute("documents.inspect", {}).value
     doctor = dispatcher.execute("documents.doctor", {}).value
+    request = dispatcher.execute("documents.sync.request", {"source": "docs"}).value
 
     assert parsed["sections"][0]["title"] == "Resume"
     assert normalized["text"] == "# Resume\n\nBody"
@@ -262,6 +264,9 @@ def test_actions_expose_ingestion_toolkit_without_leaking_secrets(tmp_path: Path
     assert inspect["namespace"] == "documents"
     assert inspect["sources"] == [{"name": "docs", "type": "local", "enabled": True}]
     assert doctor["status"] == "ok"
+    assert request["status"] == "planned"
+    assert request["operations"]
+    assert request["operations"][0]["reference"] == "resume.md"
     assert "super-secret-token" not in repr(inspect)
     assert "super-secret-token" not in repr(doctor)
 

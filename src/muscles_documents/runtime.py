@@ -271,6 +271,7 @@ class DocumentPipeline:
             status=status,
             operations_total=len(operations),
             operations_completed=0,
+            operations=operations,
             errors=[
                 DocumentError(code=operation["name"], message=operation.get("reason", operation["name"]))
                 for operation in failures
