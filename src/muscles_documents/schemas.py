@@ -140,6 +140,7 @@ class DocumentSyncResult:
     status: SyncStatus
     operations_total: int
     operations_completed: int
+    operations: list[dict[str, Any]] = field(default_factory=list)
     errors: list[DocumentError] = field(default_factory=list)
     request_id: str | None = None
 
