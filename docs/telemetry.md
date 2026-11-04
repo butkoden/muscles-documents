@@ -10,7 +10,7 @@ with telemetry.span("muscles.documents.load"):
     ...
 ```
 
-The package never imports `muscles_otel`. A project may install any provider
+The package never imports `muscles.otel`. A project may install any provider
 that implements `span(name, **attributes)`, including `muscles-otel`.
 
 ## Spans

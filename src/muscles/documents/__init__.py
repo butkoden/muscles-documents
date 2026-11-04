@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .config import DocumentsConfig, SourceConfig
+    from muscles.documents.config import DocumentsConfig, SourceConfig
     from .package import DocumentsPackage
     from .runtime import DocumentPipeline, DocumentSource
     from .schemas import (
@@ -100,11 +100,11 @@ def __getattr__(name: str):
 
         return ParsedDocument
     if name == "SourceConfig":
-        from .config import SourceConfig
+        from muscles.documents.config import SourceConfig
 
         return SourceConfig
     if name == "DocumentsConfig":
-        from .config import DocumentsConfig
+        from muscles.documents.config import DocumentsConfig
 
         return DocumentsConfig
     if name == "init_package":

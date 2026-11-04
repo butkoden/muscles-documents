@@ -1,0 +1,5 @@
+muscles<2.0.0,>=1.0.0rc1
+pydantic<3.0,>=2.7
+
+[dev]
+pytest<9.0,>=8.0

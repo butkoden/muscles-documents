@@ -1,0 +1,1675 @@
+{
+  "version": "1.0.0",
+  "schema_version": 1,
+  "project": {
+    "name": "muscles-documents",
+    "is_monorepo": false,
+    "total_files": 17,
+    "entry_points": [],
+    "tech_stack": [
+      {
+        "name": "Pydantic",
+        "version": null,
+        "category": "framework"
+      },
+      {
+        "name": "Python",
+        "version": null,
+        "category": "language"
+      }
+    ],
+    "entry_candidates": [],
+    "graph_mode": "flow"
+  },
+  "nodes": [
+    {
+      "id": "class:src/muscles_documents/config.py:DocumentsConfig",
+      "type": "class",
+      "filePath": "src/muscles_documents/config.py",
+      "name": "DocumentsConfig",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/config.py:SourceConfig",
+      "type": "class",
+      "filePath": "src/muscles_documents/config.py",
+      "name": "SourceConfig",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/runtime.py:DocumentPipeline",
+      "type": "class",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "DocumentPipeline",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/runtime.py:DocumentSource",
+      "type": "class",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "DocumentSource",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:DocumentBlob",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "DocumentBlob",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:DocumentBlock",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "DocumentBlock",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:DocumentChunk",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "DocumentChunk",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:DocumentError",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "DocumentError",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:DocumentMetadata",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "DocumentMetadata",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:DocumentRef",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "DocumentRef",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:DocumentSection",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "DocumentSection",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:DocumentSyncOperation",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "DocumentSyncOperation",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:DocumentSyncPlan",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "DocumentSyncPlan",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:DocumentSyncResult",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "DocumentSyncResult",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:ParsedDocument",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "ParsedDocument",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "class:src/muscles_documents/schemas.py:SourceCursor",
+      "type": "class",
+      "filePath": "src/muscles_documents/schemas.py",
+      "name": "SourceCursor",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "file:.github/workflows/ci.yml",
+      "type": "pipeline",
+      "filePath": ".github/workflows/ci.yml",
+      "language": "yaml",
+      "symbolCount": 0,
+      "lineCount": 15,
+      "complexity": "simple",
+      "pagerank": 0.031736,
+      "communityId": 2,
+      "tags": [
+        "config",
+        "ci"
+      ],
+      "summary": "GitHub Actions CI/CD workflow definition."
+    },
+    {
+      "id": "file:.github/workflows/release.yml",
+      "type": "pipeline",
+      "filePath": ".github/workflows/release.yml",
+      "language": "yaml",
+      "symbolCount": 0,
+      "lineCount": 28,
+      "complexity": "simple",
+      "pagerank": 0.031736,
+      "communityId": 3,
+      "tags": [
+        "config",
+        "ci"
+      ],
+      "summary": "GitHub Actions CI/CD workflow definition."
+    },
+    {
+      "id": "file:CHANGELOG.md",
+      "type": "document",
+      "filePath": "CHANGELOG.md",
+      "language": "markdown",
+      "symbolCount": 0,
+      "lineCount": 7,
+      "complexity": "simple",
+      "pagerank": 0.031736,
+      "communityId": 4,
+      "tags": [],
+      "summary": "Release history and notable changes."
+    },
+    {
+      "id": "file:README.md",
+      "type": "document",
+      "filePath": "README.md",
+      "language": "markdown",
+      "symbolCount": 0,
+      "lineCount": 129,
+      "complexity": "moderate",
+      "pagerank": 0.031736,
+      "communityId": 5,
+      "tags": [],
+      "summary": "Project overview and entry point for new readers."
+    },
+    {
+      "id": "file:docs/telemetry.md",
+      "type": "document",
+      "filePath": "docs/telemetry.md",
+      "language": "markdown",
+      "symbolCount": 0,
+      "lineCount": 30,
+      "complexity": "simple",
+      "pagerank": 0.031736,
+      "communityId": 6,
+      "tags": [],
+      "summary": "Documentation: telemetry.md."
+    },
+    {
+      "id": "file:examples/run_documents_pipeline.py",
+      "type": "file",
+      "filePath": "examples/run_documents_pipeline.py",
+      "language": "python",
+      "symbolCount": 4,
+      "lineCount": 91,
+      "complexity": "moderate",
+      "pagerank": 0.031736,
+      "communityId": 0,
+      "tags": [],
+      "summary": "Docs & Tooling module run_documents_pipeline defining MemoryTelemetry, __init__, span.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:examples/run_documents_sync.py",
+      "type": "file",
+      "filePath": "examples/run_documents_sync.py",
+      "language": "python",
+      "symbolCount": 1,
+      "lineCount": 38,
+      "complexity": "simple",
+      "pagerank": 0.031736,
+      "communityId": 0,
+      "tags": [],
+      "summary": "Docs & Tooling module run_documents_sync defining main.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:pyproject.toml",
+      "type": "config",
+      "filePath": "pyproject.toml",
+      "language": "toml",
+      "symbolCount": 0,
+      "lineCount": 31,
+      "complexity": "simple",
+      "pagerank": 0.031736,
+      "communityId": 7,
+      "tags": [
+        "config"
+      ],
+      "summary": "Python project metadata, dependencies, and build configuration."
+    },
+    {
+      "id": "file:src/muscles_documents/__init__.py",
+      "type": "file",
+      "filePath": "src/muscles_documents/__init__.py",
+      "language": "python",
+      "symbolCount": 3,
+      "lineCount": 72,
+      "complexity": "simple",
+      "pagerank": 0.119406,
+      "communityId": 0,
+      "tags": [],
+      "summary": "Application module __init__ defining __getattr__, __dir__.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:src/muscles_documents/actions.py",
+      "type": "file",
+      "filePath": "src/muscles_documents/actions.py",
+      "language": "python",
+      "symbolCount": 25,
+      "lineCount": 309,
+      "complexity": "complex",
+      "pagerank": 0.051739,
+      "communityId": 1,
+      "tags": [],
+      "summary": "Application module actions defining _register_action, register_document_actions, _pipeline.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:src/muscles_documents/config.py",
+      "type": "file",
+      "filePath": "src/muscles_documents/config.py",
+      "language": "python",
+      "symbolCount": 3,
+      "lineCount": 43,
+      "complexity": "simple",
+      "pagerank": 0.143919,
+      "communityId": 1,
+      "tags": [],
+      "summary": "Application module config defining SourceConfig, DocumentsConfig, from_raw.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:src/muscles_documents/package.py",
+      "type": "file",
+      "filePath": "src/muscles_documents/package.py",
+      "language": "python",
+      "symbolCount": 21,
+      "lineCount": 150,
+      "complexity": "complex",
+      "pagerank": 0.070598,
+      "communityId": 1,
+      "tags": [],
+      "summary": "Application module package defining DocumentsPackage, build_runtime, services.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:src/muscles_documents/runtime.py",
+      "type": "file",
+      "filePath": "src/muscles_documents/runtime.py",
+      "language": "python",
+      "symbolCount": 37,
+      "lineCount": 637,
+      "complexity": "complex",
+      "pagerank": 0.141322,
+      "communityId": 1,
+      "tags": [],
+      "summary": "Application module runtime defining DocumentSource, _normalize_path, DocumentPipeline.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:src/muscles_documents/schemas.py",
+      "type": "file",
+      "filePath": "src/muscles_documents/schemas.py",
+      "language": "python",
+      "symbolCount": 14,
+      "lineCount": 89,
+      "complexity": "moderate",
+      "pagerank": 0.123916,
+      "communityId": 0,
+      "tags": [],
+      "summary": "Application module schemas defining DocumentError, DocumentRef, DocumentBlob.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:tests/test_ingestion_toolkit.py",
+      "type": "file",
+      "filePath": "tests/test_ingestion_toolkit.py",
+      "language": "python",
+      "symbolCount": 8,
+      "lineCount": 234,
+      "complexity": "moderate",
+      "pagerank": 0.031736,
+      "communityId": 0,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for ingestion_toolkit.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:tests/test_init.py",
+      "type": "file",
+      "filePath": "tests/test_init.py",
+      "language": "python",
+      "symbolCount": 2,
+      "lineCount": 35,
+      "complexity": "simple",
+      "pagerank": 0.031736,
+      "communityId": 0,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for init.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "file:tests/test_telemetry.py",
+      "type": "file",
+      "filePath": "tests/test_telemetry.py",
+      "language": "python",
+      "symbolCount": 8,
+      "lineCount": 88,
+      "complexity": "moderate",
+      "pagerank": 0.031736,
+      "communityId": 0,
+      "tags": [
+        "test"
+      ],
+      "summary": "Tests for telemetry.",
+      "primaryOwner": "Denis Butko"
+    },
+    {
+      "id": "function:src/muscles_documents/config.py:from_raw",
+      "type": "function",
+      "filePath": "src/muscles_documents/config.py",
+      "name": "from_raw",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:__init__",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "__init__",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_blob_from_path",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_blob_from_path",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_checksum_bytes",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_checksum_bytes",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_checksum_text",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_checksum_text",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_chunk_text",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_chunk_text",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_collect_sync_operations",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_collect_sync_operations",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_extract_structure",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_extract_structure",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_heading_segments",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_heading_segments",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_html_to_markdown_text",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_html_to_markdown_text",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_is_hidden",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_is_hidden",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_iter_local_files",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_iter_local_files",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_mime_for_reference",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_mime_for_reference",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_normalize_path",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_normalize_path",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_normalize_text",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_normalize_text",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_ref_from_path",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_ref_from_path",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_reference_for_path",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_reference_for_path",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_require_source",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_require_source",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_resolve_local_reference",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_resolve_local_reference",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_select_parser",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_select_parser",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:_stable_id",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "_stable_id",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:chunk",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "chunk",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:doctor",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "doctor",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:inspect",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "inspect",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:inspect_source",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "inspect_source",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:list_refs",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "list_refs",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:list_sources",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "list_sources",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:load",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "load",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:load_blob",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "load_blob",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:load_blobs",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "load_blobs",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:normalize",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "normalize",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:parse",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "parse",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:parse_blob",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "parse_blob",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:parse_text",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "parse_text",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:sync_plan",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "sync_plan",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    },
+    {
+      "id": "function:src/muscles_documents/runtime.py:sync_request",
+      "type": "function",
+      "filePath": "src/muscles_documents/runtime.py",
+      "name": "sync_request",
+      "language": "python",
+      "tags": [],
+      "summary": ""
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:examples/run_documents_pipeline.py",
+      "target": "file:src/muscles_documents/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:examples/run_documents_sync.py",
+      "target": "file:src/muscles_documents/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/__init__.py",
+      "target": "file:src/muscles_documents/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/__init__.py",
+      "target": "file:src/muscles_documents/package.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/__init__.py",
+      "target": "file:src/muscles_documents/runtime.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/__init__.py",
+      "target": "file:src/muscles_documents/schemas.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/actions.py",
+      "target": "file:src/muscles_documents/runtime.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/config.py",
+      "target": "class:src/muscles_documents/config.py:DocumentsConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/config.py",
+      "target": "class:src/muscles_documents/config.py:SourceConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/config.py",
+      "target": "function:src/muscles_documents/config.py:from_raw",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/config.py::DocumentsConfig",
+      "target": "function:src/muscles_documents/config.py:from_raw",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/package.py",
+      "target": "file:src/muscles_documents/actions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/package.py",
+      "target": "file:src/muscles_documents/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/package.py",
+      "target": "file:src/muscles_documents/runtime.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "class:src/muscles_documents/runtime.py:DocumentPipeline",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "class:src/muscles_documents/runtime.py:DocumentSource",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "file:src/muscles_documents/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "file:src/muscles_documents/schemas.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:__init__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_blob_from_path",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_checksum_bytes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_checksum_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_chunk_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_collect_sync_operations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_extract_structure",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_heading_segments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_html_to_markdown_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_is_hidden",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_iter_local_files",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_mime_for_reference",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_normalize_path",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_normalize_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_ref_from_path",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_reference_for_path",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_require_source",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_resolve_local_reference",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_select_parser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:_stable_id",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:chunk",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:doctor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:inspect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:inspect_source",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:list_refs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:list_sources",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:load",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:load_blob",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:load_blobs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:normalize",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:parse",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:parse_blob",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:parse_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:sync_plan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py",
+      "target": "function:src/muscles_documents/runtime.py:sync_request",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:__init__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_blob_from_path",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_checksum_bytes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_checksum_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_chunk_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_collect_sync_operations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_extract_structure",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_heading_segments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_html_to_markdown_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_is_hidden",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_iter_local_files",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_mime_for_reference",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_normalize_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_ref_from_path",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_reference_for_path",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_require_source",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_resolve_local_reference",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_select_parser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:_stable_id",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:chunk",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:doctor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:inspect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:inspect_source",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:list_refs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:list_sources",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:load",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:load_blob",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:load_blobs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:normalize",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:parse",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:parse_blob",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:parse_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:sync_plan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/runtime.py::DocumentPipeline",
+      "target": "function:src/muscles_documents/runtime.py:sync_request",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:DocumentBlob",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:DocumentBlock",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:DocumentChunk",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:DocumentError",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:DocumentMetadata",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:DocumentRef",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:DocumentSection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:DocumentSyncOperation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:DocumentSyncPlan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:DocumentSyncResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:ParsedDocument",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/muscles_documents/schemas.py",
+      "target": "class:src/muscles_documents/schemas.py:SourceCursor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_ingestion_toolkit.py",
+      "target": "file:src/muscles_documents/__init__.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_ingestion_toolkit.py",
+      "target": "file:src/muscles_documents/config.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_ingestion_toolkit.py",
+      "target": "file:src/muscles_documents/runtime.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_ingestion_toolkit.py",
+      "target": "file:src/muscles_documents/schemas.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_init.py",
+      "target": "file:src/muscles_documents/__init__.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_init.py",
+      "target": "file:src/muscles_documents/runtime.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_telemetry.py",
+      "target": "file:src/muscles_documents/__init__.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_telemetry.py",
+      "target": "file:src/muscles_documents/package.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 1.0
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:application",
+      "name": "Application",
+      "description": "",
+      "nodeIds": [
+        "file:CHANGELOG.md",
+        "file:README.md",
+        "file:pyproject.toml",
+        "file:src/muscles_documents/__init__.py",
+        "file:src/muscles_documents/actions.py",
+        "file:src/muscles_documents/config.py",
+        "file:src/muscles_documents/package.py",
+        "file:src/muscles_documents/runtime.py",
+        "file:src/muscles_documents/schemas.py"
+      ],
+      "display_order": 0,
+      "order_basis": "canonical"
+    },
+    {
+      "id": "layer:config",
+      "name": "Config",
+      "description": "",
+      "nodeIds": [
+        "file:.github/workflows/ci.yml",
+        "file:.github/workflows/release.yml"
+      ],
+      "display_order": 1,
+      "order_basis": "canonical"
+    },
+    {
+      "id": "layer:docs-tooling",
+      "name": "Docs & Tooling",
+      "description": "",
+      "nodeIds": [
+        "file:docs/telemetry.md",
+        "file:examples/run_documents_pipeline.py",
+        "file:examples/run_documents_sync.py"
+      ],
+      "display_order": 2,
+      "order_basis": "canonical"
+    },
+    {
+      "id": "layer:test",
+      "name": "Test",
+      "description": "",
+      "nodeIds": [
+        "file:tests/test_ingestion_toolkit.py",
+        "file:tests/test_init.py",
+        "file:tests/test_telemetry.py"
+      ],
+      "display_order": 3,
+      "order_basis": "canonical"
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "target_path": "README.md",
+      "page_type": "repo_overview",
+      "title": "README.md",
+      "depth": 0,
+      "kind": "overview",
+      "reason": "Start here for the end-to-end picture before diving into the code.",
+      "layer_id": "layer:application"
+    },
+    {
+      "order": 2,
+      "target_path": "src/muscles_documents/__init__.py",
+      "page_type": "file_page",
+      "title": "__init__.py",
+      "depth": 0,
+      "kind": "code",
+      "reason": "The walk's anchor \u2014 its imports fan out the widest in a repo with no single entry point.",
+      "layer_id": "layer:application"
+    },
+    {
+      "order": 3,
+      "target_path": "src/muscles_documents/config.py",
+      "page_type": "file_page",
+      "title": "config.py",
+      "depth": 1,
+      "kind": "code",
+      "reason": "Directly imported by the anchor above; a core collaborator.",
+      "layer_id": "layer:application"
+    },
+    {
+      "order": 4,
+      "target_path": "src/muscles_documents/runtime.py",
+      "page_type": "file_page",
+      "title": "runtime.py",
+      "depth": 1,
+      "kind": "code",
+      "reason": "Directly imported by the anchor above; a core collaborator.",
+      "layer_id": "layer:application"
+    },
+    {
+      "order": 5,
+      "target_path": "src/muscles_documents/schemas.py",
+      "page_type": "file_page",
+      "title": "schemas.py",
+      "depth": 1,
+      "kind": "code",
+      "reason": "Directly imported by the anchor above; a core collaborator.",
+      "layer_id": "layer:application"
+    },
+    {
+      "order": 6,
+      "target_path": "src/muscles_documents/package.py",
+      "page_type": "file_page",
+      "title": "package.py",
+      "depth": 1,
+      "kind": "code",
+      "reason": "Directly imported by the anchor above; a core collaborator.",
+      "layer_id": "layer:application"
+    },
+    {
+      "order": 7,
+      "target_path": "src/muscles_documents/actions.py",
+      "page_type": "file_page",
+      "title": "actions.py",
+      "depth": 2,
+      "kind": "code",
+      "reason": "Reached 2 imports deep \u2014 a supporting building block.",
+      "layer_id": "layer:application"
+    },
+    {
+      "order": 8,
+      "target_path": "tests/test_ingestion_toolkit.py",
+      "page_type": "file_page",
+      "title": "test_ingestion_toolkit.py",
+      "depth": 3,
+      "kind": "code",
+      "reason": "The test suite \u2014 how the system's behavior is verified.",
+      "layer_id": "layer:test"
+    }
+  ],
+  "modules": [
+    {
+      "id": "module:application",
+      "name": "Application",
+      "path": "",
+      "layerId": "layer:application",
+      "nodeIds": [
+        "file:CHANGELOG.md",
+        "file:README.md",
+        "file:pyproject.toml",
+        "file:src/muscles_documents/__init__.py",
+        "file:src/muscles_documents/actions.py",
+        "file:src/muscles_documents/config.py",
+        "file:src/muscles_documents/package.py",
+        "file:src/muscles_documents/runtime.py",
+        "file:src/muscles_documents/schemas.py"
+      ],
+      "wholeLayer": true,
+      "language": "python"
+    },
+    {
+      "id": "module:docs-tooling",
+      "name": "Docs & Tooling",
+      "path": "",
+      "layerId": "layer:docs-tooling",
+      "nodeIds": [
+        "file:docs/telemetry.md",
+        "file:examples/run_documents_pipeline.py",
+        "file:examples/run_documents_sync.py"
+      ],
+      "wholeLayer": true,
+      "language": "python"
+    },
+    {
+      "id": "module:tests",
+      "name": "Test",
+      "path": "tests",
+      "layerId": "layer:test",
+      "nodeIds": [
+        "file:tests/test_ingestion_toolkit.py",
+        "file:tests/test_init.py",
+        "file:tests/test_telemetry.py"
+      ],
+      "wholeLayer": true,
+      "language": "python"
+    }
+  ]
+}

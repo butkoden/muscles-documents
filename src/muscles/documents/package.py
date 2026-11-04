@@ -4,7 +4,7 @@ import inspect
 from typing import Any
 
 from .actions import register_document_actions
-from .config import DocumentsConfig
+from muscles.documents.config import DocumentsConfig
 from .runtime import DocumentPipeline
 
 

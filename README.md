@@ -18,30 +18,41 @@ Related repositories:
 
 - [`muscles`](https://github.com/butkoden/muscles) - core action contracts, dispatcher, inspect contract and canonical documentation.
 - [`muscles-ai`](https://github.com/butkoden/muscles-ai) - AI/RAG actions that can consume document contracts.
-- [`muscles-sql`](https://github.com/butkoden/muscles-sql) - SQL persistence for projects that store document metadata or ingestion state.
+- [`muscles-data-sql`](https://github.com/butkoden/muscles-data-sql) - native SQL persistence  for projects that store document metadata or ingestion state.
 - [`muscles-mcp`](https://github.com/butkoden/muscles-mcp) - MCP projection for document actions when exposed to AI tools.
 - [`muscles-benchmarks`](https://github.com/butkoden/muscles-benchmarks) - regression coverage for document extension contracts.
 
 ## Installation
 
 ```bash
-pip install git+https://github.com/butkoden/muscles-documents.git
+pip install muscles-documents
 ```
 
 The canonical ecosystem install matrix lives in
 [`muscles/docs/installation.md`](https://github.com/butkoden/muscles/blob/master/docs/installation.md).
 
-Configured as a standard module package:
+## Install Into An Application
 
-```yaml
-modules:
-  documents:
-    package: muscles_documents
-    sources:
-      docs:
-        type: local
-        path: ./docs
+Install `DocumentsPackage` from the application composition root with the
+Muscles package lifecycle. The application owns the config and app instance;
+the Documents package registers its runtime and actions on that app:
+
+```python
+from muscles import install_package
+from muscles.documents import DocumentsPackage
+
+documents_config = {
+    "key": "documents",
+    "sources": {
+        "docs": {"type": "local", "path": "./docs"},
+    },
+}
+
+documents = install_package(app, documents_config, DocumentsPackage())
 ```
+
+Call this from the existing application/package composition path. Do not
+create another application instance for Documents.
 
 ## Actions
 
@@ -82,20 +93,53 @@ parsed documents, chunks and sync state in PostgreSQL, Elasticsearch, MongoDB,
 Redis, Qdrant or another system, but `muscles-documents` does not import those
 clients and does not write to external stores directly.
 
+Keep the data adapter registration and resource configuration in the shared
+application composition root. Application-owned code that persists chunks uses the
+configured port from `app.resource`; it must not construct another
+`DataRuntime`, adapter catalog or database connection:
+
+```python
+from muscles.data.ports import DocumentStorePort
+
+
+def persist_chunks(app, chunks) -> None:
+    store = app.resource.connect("documents.content", DocumentStorePort)
+    for chunk in chunks:
+        store.upsert_document(
+            "chunks",
+            chunk.chunk_id,
+            {
+                "source": chunk.source,
+                "reference": chunk.reference,
+                "text": chunk.text,
+                "section_path": chunk.section_path,
+                "metadata": chunk.metadata,
+            },
+        )
+```
+
+The `documents.content` resource and its adapter are configured once by the
+application. Persistence remains an application use case; the Documents
+pipeline stays storage-neutral.
+
 `muscles-ai` can consume `DocumentChunk` objects after a project stores and
 exposes them through its own data/search ports. This package does not call
 LLMs, create embeddings, rank search results or own prompt/RAG behavior.
 
 ### Python API
 
+This is a standalone, in-process pipeline example. It does not persist results;
+the application can install the package through `init_package` when it needs
+the registered actions.
+
 ```python
-from muscles_documents.config import SourceConfig
-from muscles_documents.runtime import DocumentPipeline
+from muscles.documents.config import SourceConfig
+from muscles.documents.runtime import DocumentPipeline
 
 pipeline = DocumentPipeline(
     key="documents",
     sources={
-        "docs": SourceConfig(name="docs", type="local", path="./docs"),
+        "docs": SourceConfig(name="docs", type="local", path="docs"),
     },
 )
 
@@ -160,3 +204,8 @@ Both examples:
 - demonstrate `load`, `parse`, `normalize`, `chunk`, `sync.plan`, `sync.request`,
   `inspect`, and `doctor` flows;
 - show neutral telemetry provider usage without requiring `muscles-otel`.
+
+These are isolated smoke runners rather than production application bootstraps:
+they use temporary local files and a minimal app object, and do not create a
+second data runtime or write to a database. In an application, use the existing
+application instance and shared `app.resource` for persistence.

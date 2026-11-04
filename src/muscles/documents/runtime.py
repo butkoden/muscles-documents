@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Iterable
 from urllib.parse import unquote
 
-from .config import SourceConfig
+from muscles.documents.config import SourceConfig
 from .schemas import (
     DocumentBlob,
     DocumentBlock,

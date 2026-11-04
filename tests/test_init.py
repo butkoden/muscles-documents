@@ -6,8 +6,8 @@ from types import SimpleNamespace
 
 from muscles import ActionDispatcher, inspect_application
 
-from muscles_documents import DocumentsPackage
-from muscles_documents.runtime import DocumentPipeline
+from muscles.documents import DocumentsPackage
+from muscles.documents.runtime import DocumentPipeline
 
 
 def test_documents_init_registers_actions_and_runtime(tmp_path: Path):
@@ -40,7 +40,7 @@ def test_documents_init_registers_actions_and_runtime(tmp_path: Path):
 
 
 def test_documents_public_exports():
-    import muscles_documents as md
+    import muscles.documents as md
 
     assert hasattr(md, "DocumentPipeline")
     assert hasattr(md, "DocumentsPackage")

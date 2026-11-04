@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "muscles-documents"
-version = "0.1.1"
+version = "0.2.0"
 description = "Framework-level document ingestion primitives for Muscles"
 readme = "README.md"
-license = "MIT"
+license = {text = "MIT"}
 requires-python = ">=3.10"
 authors = [{ name = "Denis B.", email = "denis@butko.info" }]
 dependencies = [
@@ -23,7 +23,7 @@ PyPI = "https://pypi.org/project/muscles-documents/"
 Releases = "https://github.com/butkoden/muscles-documents/releases"
 "muscles" = "https://pypi.org/project/muscles/"
 "muscles-ai" = "https://pypi.org/project/muscles-ai/"
-"muscles-sql" = "https://pypi.org/project/muscles-sql/"
+"muscles-data-sql" = "https://github.com/butkoden/muscles-data-sql"
 "muscles-mcp" = "https://pypi.org/project/muscles-mcp/"
 "muscles-benchmarks" = "https://pypi.org/project/muscles-benchmarks/"
 
@@ -40,3 +40,4 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["muscles.documents*"]

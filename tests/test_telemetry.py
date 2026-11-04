@@ -8,8 +8,8 @@ from typing import Any, Iterator
 
 from muscles import ActionDispatcher, DependencyContainer, TelemetryProvider
 
-from muscles_documents import DocumentsPackage
-from muscles_documents.package import init_package
+from muscles.documents import DocumentsPackage
+from muscles.documents.package import init_package
 
 
 class RecordingTelemetry:
@@ -102,7 +102,7 @@ def test_documents_init_package_uses_core_lifecycle_when_available(tmp_path: Pat
 
 
 def test_documents_source_does_not_import_muscles_otel_directly():
-    source_root = Path(__file__).resolve().parents[1] / "src" / "muscles_documents"
+    source_root = Path(__file__).resolve().parents[1] / "src" / "muscles" / "documents"
     source_text = "\n".join(path.read_text(encoding="utf-8") for path in source_root.rglob("*.py"))
 
-    assert "muscles_otel" not in source_text
+    assert "muscles.otel" not in source_text

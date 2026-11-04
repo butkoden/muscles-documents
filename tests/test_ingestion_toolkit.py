@@ -9,10 +9,10 @@ from typing import Any
 import pytest
 from muscles import ActionDispatcher, inspect_application
 
-from muscles_documents import DocumentsPackage
-from muscles_documents.config import SourceConfig
-from muscles_documents.runtime import DocumentPipeline
-from muscles_documents.schemas import (
+from muscles.documents import DocumentsPackage
+from muscles.documents.config import SourceConfig
+from muscles.documents.runtime import DocumentPipeline
+from muscles.documents.schemas import (
     DocumentBlob,
     DocumentBlock,
     DocumentRef,
@@ -272,11 +272,11 @@ def test_actions_expose_ingestion_toolkit_without_leaking_secrets(tmp_path: Path
 
 
 def test_documents_source_does_not_import_storage_or_ai_vendors():
-    source_root = Path(__file__).resolve().parents[1] / "src" / "muscles_documents"
+    source_root = Path(__file__).resolve().parents[1] / "src" / "muscles" / "documents"
     source_text = "\n".join(path.read_text(encoding="utf-8") for path in source_root.rglob("*.py"))
 
     forbidden = [
-        "muscles_ai",
+        "muscles.ai",
         "sqlalchemy",
         "qdrant",
         "elasticsearch",

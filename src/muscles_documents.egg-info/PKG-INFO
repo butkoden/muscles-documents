@@ -1,0 +1,234 @@
+Metadata-Version: 2.1
+Name: muscles-documents
+Version: 0.1.1
+Summary: Framework-level document ingestion primitives for Muscles
+Author-email: "Denis B." <denis@butko.info>
+License: MIT
+Project-URL: Homepage, https://github.com/butkoden/muscles-documents
+Project-URL: Repository, https://github.com/butkoden/muscles-documents
+Project-URL: Documentation, https://github.com/butkoden/muscles-documents#readme
+Project-URL: PyPI, https://pypi.org/project/muscles-documents/
+Project-URL: Releases, https://github.com/butkoden/muscles-documents/releases
+Project-URL: muscles, https://pypi.org/project/muscles/
+Project-URL: muscles-ai, https://pypi.org/project/muscles-ai/
+Project-URL: muscles-data-sql, https://github.com/butkoden/muscles-data-sql
+Project-URL: muscles-mcp, https://pypi.org/project/muscles-mcp/
+Project-URL: muscles-benchmarks, https://pypi.org/project/muscles-benchmarks/
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: muscles<2.0.0,>=1.0.0rc1
+Requires-Dist: pydantic<3.0,>=2.7
+Provides-Extra: dev
+Requires-Dist: pytest<9.0,>=8.0; extra == "dev"
+
+# muscles-documents
+
+Framework-level document ingestion and chunking package for the Muscles ecosystem.
+
+## Purpose
+
+- Define contracts for documents, chunking, parsing and metadata.
+- Provide an initial pipeline for local files + markdown/text content ingestion.
+- Expose `Muscles` actions to drive ingestion/diagnostics through any transport.
+
+## Ecosystem Position
+
+`muscles-documents` is a framework extension for document flows. It owns source
+loading, parsing, chunking, metadata and sync planning; it does not own AI model
+calls or protocol routing.
+
+Related repositories:
+
+- [`muscles`](https://github.com/butkoden/muscles) - core action contracts, dispatcher, inspect contract and canonical documentation.
+- [`muscles-ai`](https://github.com/butkoden/muscles-ai) - AI/RAG actions that can consume document contracts.
+- [`muscles-data-sql`](https://github.com/butkoden/muscles-data-sql) - native SQL persistence (repository: `muscles-data-sql`) for projects that store document metadata or ingestion state.
+- [`muscles-mcp`](https://github.com/butkoden/muscles-mcp) - MCP projection for document actions when exposed to AI tools.
+- [`muscles-benchmarks`](https://github.com/butkoden/muscles-benchmarks) - regression coverage for document extension contracts.
+
+## Installation
+
+```bash
+pip install muscles-documents
+```
+
+The canonical ecosystem install matrix lives in
+[`muscles/docs/installation.md`](https://github.com/butkoden/muscles/blob/master/docs/installation.md).
+
+## Install Into An Application
+
+Install `DocumentsPackage` from the application composition root with the
+Muscles package lifecycle. The application owns the config and app instance;
+the Documents package registers its runtime and actions on that app:
+
+```python
+from muscles import install_package
+from muscles.documents import DocumentsPackage
+
+documents_config = {
+    "key": "documents",
+    "sources": {
+        "docs": {"type": "local", "path": "./docs"},
+    },
+}
+
+documents = install_package(app, documents_config, DocumentsPackage())
+```
+
+Call this from the existing application/package composition path. Do not
+create another application instance for Documents.
+
+## Actions
+
+- `documents.sources.list`
+- `documents.source.inspect`
+- `documents.load`
+- `documents.parse`
+- `documents.normalize`
+- `documents.chunk`
+- `documents.sync.plan`
+- `documents.sync.request`
+- `documents.inspect`
+- `documents.doctor`
+
+## Ingestion Toolkit
+
+The package exposes portable contracts for the document preparation flow:
+
+```text
+source -> DocumentRef -> DocumentBlob -> ParsedDocument
+       -> DocumentSection / DocumentBlock -> DocumentChunk
+       -> DocumentSyncPlan / DocumentSyncResult
+```
+
+MVP components:
+
+- local source adapter with stable relative references;
+- raw blob loading with checksums;
+- text, markdown and HTML parsers;
+- safe text normalizer that preserves markdown code fences;
+- fixed-size and heading-aware chunkers;
+- dry-run sync planner;
+- sync request result contract for project executors/jobs;
+- safe `inspect` and `doctor` diagnostics.
+
+Projects own persistence and integration policy. They may store refs, blobs,
+parsed documents, chunks and sync state in PostgreSQL, Elasticsearch, MongoDB,
+Redis, Qdrant or another system, but `muscles-documents` does not import those
+clients and does not write to external stores directly.
+
+Keep the data adapter registration and resource configuration in the shared
+application composition root. Application-owned code that persists chunks uses the
+configured port from `app.resource`; it must not construct another
+`DataRuntime`, adapter catalog or database connection:
+
+```python
+from muscles.data.ports import DocumentStorePort
+
+
+def persist_chunks(app, chunks) -> None:
+    store = app.resource.connect("documents.content", DocumentStorePort)
+    for chunk in chunks:
+        store.upsert_document(
+            "chunks",
+            chunk.chunk_id,
+            {
+                "source": chunk.source,
+                "reference": chunk.reference,
+                "text": chunk.text,
+                "section_path": chunk.section_path,
+                "metadata": chunk.metadata,
+            },
+        )
+```
+
+The `documents.content` resource and its adapter are configured once by the
+application. Persistence remains an application use case; the Documents
+pipeline stays storage-neutral.
+
+`muscles-ai` can consume `DocumentChunk` objects after a project stores and
+exposes them through its own data/search ports. This package does not call
+LLMs, create embeddings, rank search results or own prompt/RAG behavior.
+
+### Python API
+
+This is a standalone, in-process pipeline example. It does not persist results;
+the application can install the package through `init_package` when it needs
+the registered actions.
+
+```python
+from muscles.documents.config import SourceConfig
+from muscles.documents.runtime import DocumentPipeline
+
+pipeline = DocumentPipeline(
+    key="documents",
+    sources={
+        "docs": SourceConfig(name="docs", type="local", path="docs"),
+    },
+)
+
+refs = pipeline.list_refs("docs")
+blob = pipeline.load_blob("docs", refs[0].reference)
+parsed = pipeline.parse_blob(blob)
+normalized = pipeline.normalize(parsed)
+chunks = pipeline.chunk(normalized, strategy="heading")
+plan = pipeline.sync_plan("docs")
+```
+
+## Scope
+
+MVP is read-only: no writes to external systems are performed.
+Google Drive, PDF/DOCX, URL/HTTP and richer storage adapters are extension
+points for later package iterations; the current package keeps parser/source
+contracts stable for those additions.
+
+## Telemetry
+
+`muscles-documents` resolves telemetry through the neutral Muscles
+`TelemetryProvider`; it does not import `muscles-otel` directly.
+
+When a project registers a provider, document actions emit safe spans:
+
+- `muscles.documents.source.list`
+- `muscles.documents.load`
+- `muscles.documents.parse`
+- `muscles.documents.normalize`
+- `muscles.documents.chunk`
+- `muscles.documents.sync.plan`
+- `muscles.documents.sync.execute`
+- `muscles.documents.inspect`
+- `muscles.documents.doctor`
+
+Allowed attributes include source name/type, MIME, parser and chunker metadata.
+Raw document text, HTML body, extracted text, file content, source credentials
+and tokens must not be stored in span attributes.
+
+## Examples
+
+### Local source smoke
+
+Run a full `documents.*` action flow on temporary files:
+
+```bash
+PYTHONPATH=src python examples/run_documents_pipeline.py
+```
+
+### Sync plan and request
+
+Build and inspect a sync plan for configured sources:
+
+```bash
+PYTHONPATH=src python examples/run_documents_sync.py
+```
+
+Both examples:
+
+- initialize package via `init_package(app, config)`;
+- use `ActionDispatcher` for actions;
+- demonstrate `load`, `parse`, `normalize`, `chunk`, `sync.plan`, `sync.request`,
+  `inspect`, and `doctor` flows;
+- show neutral telemetry provider usage without requiring `muscles-otel`.
+
+These are isolated smoke runners rather than production application bootstraps:
+they use temporary local files and a minimal app object, and do not create a
+second data runtime or write to a database. In an application, use the existing
+application instance and shared `app.resource` for persistence.
